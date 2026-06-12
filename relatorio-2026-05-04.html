@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Relatório de Desempenho — Action+</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Paleta oficial Action+ (Brandbook v1.0) */
+    --action-green: #91FF56;
+    --strategy-green: #4DC149;
+    --dark-blue: #042D46;
+    --very-dark-blue: #0C2335;
+    --almost-black: #00121D;
+    --light-blue: #A3C6D5;
+    --very-light-blue: #D4EBF9;
+    --really-light-blue: #EEF7FF;
+    --white: #FFFFFF;
+
+    --bg: var(--almost-black);
+    --surface: var(--very-dark-blue);
+    --surface-2: var(--dark-blue);
+    --border: #18415c;
+    --text: var(--really-light-blue);
+    --muted: #7fa6bb;
+    --accent: var(--action-green);
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 40px 32px 80px; }
+
+  header { margin-bottom: 40px; }
+  .topbar { display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px; margin-bottom: 36px; }
+  .logo { font-family: "Clash Display", "Inter", sans-serif; font-weight: 600;
+    font-size: 30px; letter-spacing: -.5px; color: var(--white); line-height: 1;
+    text-decoration: none; }
+  .logo .plus { color: var(--action-green); }
+  .topbar .tag { font-size: 12px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted); }
+
+  /* Guias de períodos */
+  .tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+  .tab { display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+    font-size: 13px; font-weight: 700; color: var(--muted); padding: 9px 16px;
+    border: 1px solid var(--border); border-radius: 30px; transition: .15s; }
+  .tab:hover { border-color: var(--action-green); color: var(--text); }
+  .tab.active { background: var(--action-green); border-color: var(--action-green);
+    color: var(--almost-black); }
+  .tab .badge { font-size: 10px; font-weight: 800; letter-spacing: .5px;
+    text-transform: uppercase; padding: 2px 8px; border-radius: 20px;
+    background: rgba(0,18,29,.18); }
+  .tab:not(.active) .badge { background: rgba(145,255,86,.14); color: var(--action-green); }
+
+  .hero { border-left: 4px solid var(--action-green); padding-left: 22px; }
+  h1 { font-size: clamp(30px, 5vw, 46px); font-weight: 800; line-height: 1.05;
+    color: var(--white); letter-spacing: -1px; }
+  h1 .accent { color: var(--action-green); }
+  .subtitle { color: var(--muted); margin-top: 12px; font-size: 16px; max-width: 640px; }
+
+  .section-title { display: flex; align-items: center; gap: 12px; margin: 46px 0 18px; }
+  .section-title h2 { font-size: 22px; font-weight: 700; color: var(--white);
+    letter-spacing: -.3px; }
+  .section-title .bar { width: 26px; height: 4px; background: var(--action-green);
+    border-radius: 4px; }
+  .section-title .chip { font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--muted); margin-left: auto; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px; }
+  .kpi { background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px; transition: .15s; }
+  .kpi:hover { border-color: var(--action-green); }
+  .kpi .label { font-size: 12.5px; color: var(--muted); font-weight: 600;
+    margin-bottom: 8px; }
+  .kpi .value { font-size: 28px; font-weight: 800; color: var(--white);
+    letter-spacing: -.5px; line-height: 1.1; }
+  .kpi .value.green { color: var(--action-green); }
+  .kpi .note { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+  .highlights { display: grid; gap: 12px; }
+  .hl-card { display: flex; gap: 16px; align-items: flex-start;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px 20px; transition: .15s; }
+  .hl-card:hover { border-color: var(--action-green); }
+  .hl-num { font-family: "Clash Display","Inter",sans-serif; font-weight: 700;
+    font-size: 22px; color: var(--action-green); min-width: 34px; line-height: 1.2; }
+  .hl-body .t { font-size: 15.5px; font-weight: 700; color: var(--white); }
+  .hl-body .d { font-size: 14px; color: var(--text); margin-top: 4px; }
+  .hl-body .d strong { color: var(--action-green); font-weight: 700; }
+
+  footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+    gap: 10px; color: var(--muted); font-size: 13px; }
+  footer .site { color: var(--action-green); font-weight: 700;
+    font-family: "Clash Display","Inter",sans-serif; letter-spacing: .3px; }
+  footer a { color: var(--muted); }
+
+  @media (max-width: 720px) {
+    .wrap { padding: 28px 18px 60px; }
+    .kpi .value { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="topbar">
+      <div class="logo">Action<span class="plus">+</span></div>
+      <div class="tag">Tráfego pago · Relatório de desempenho · 28/04 a 04/05/2026</div>
+    </div>
+    <nav class="tabs" id="tabs" aria-label="Períodos dos relatórios"></nav>
+    <div class="hero">
+      <h1>Resultados da <span class="accent">semana</span></h1>
+      <p class="subtitle">Visão geral dos principais indicadores de mídia entre 28 de abril e 4 de maio de 2026, comparados com a semana anterior. Clareza na visão, método na execução.</p>
+    </div>
+  </header>
+
+  <div class="section-title"><span class="bar"></span><h2>Visão geral</h2></div>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">Investimento total</div>
+      <div class="value green">R$ 690,72</div>
+      <div class="note">10 anúncios ativos</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Impressões totais</div>
+      <div class="value">102.777</div>
+      <div class="note">Meta Ads + Google Ads</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Cliques totais</div>
+      <div class="value">418</div>
+      <div class="note">Na semana</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Conversões (Google Ads)</div>
+      <div class="value green">3</div>
+      <div class="note">Primeiros resultados da campanha nova</div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="bar"></span><h2>Google Ads</h2><span class="chip">Pesquisa</span></div>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">CTR (taxa de cliques)</div>
+      <div class="value green">4,67%</div>
+      <div class="note">Crescimento de 52% sobre a semana anterior</div>
+    </div>
+    <div class="kpi">
+      <div class="label">CPC médio</div>
+      <div class="value">R$ 1,71</div>
+      <div class="note">350 cliques na semana</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Melhor CTR de palavra-chave</div>
+      <div class="value" style="font-size:19px;">"Logotipo profissional"</div>
+      <div class="note">CTR de 18,18% · 48% dos anúncios na 1ª posição</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Grupo Branding</div>
+      <div class="value">9,77%</div>
+      <div class="note">CTR do grupo com 51 cliques</div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="bar"></span><h2>Meta Ads</h2><span class="chip">Facebook + Instagram</span></div>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">CPM médio</div>
+      <div class="value green">R$ 0,97</div>
+      <div class="note">Reconhecimento abaixo de R$ 1</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Pessoas alcançadas</div>
+      <div class="value">84.247</div>
+      <div class="note">Com apenas R$ 92,48 investidos</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Cliques no Instagram</div>
+      <div class="value">45</div>
+      <div class="note">Crescimento de 18% sobre a semana anterior</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Custo por engajamento</div>
+      <div class="value">R$ 0,04</div>
+      <div class="note">2.419 engajamentos com a página</div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="bar"></span><h2>Destaques do período</h2></div>
+  <div class="highlights">
+    <div class="hl-card">
+      <div class="hl-num">01</div>
+      <div class="hl-body">
+        <div class="t">CTR do Google Ads em forte alta</div>
+        <div class="d">A taxa de cliques subiu <strong>52%</strong> em relação à semana anterior, chegando a <strong>4,67%</strong> — sinal de anúncios cada vez mais relevantes.</div>
+      </div>
+    </div>
+    <div class="hl-card">
+      <div class="hl-num">02</div>
+      <div class="hl-body">
+        <div class="t">Primeiras conversões da campanha nova</div>
+        <div class="d">A campanha de pesquisa registrou as <strong>3 primeiras conversões</strong>, com o grupo Agencia+ convertendo a R$ 57,38.</div>
+      </div>
+    </div>
+    <div class="hl-card">
+      <div class="hl-num">03</div>
+      <div class="hl-body">
+        <div class="t">Alcance barato no Meta</div>
+        <div class="d">Foram <strong>84 mil pessoas alcançadas</strong> com CPM de <strong>R$ 0,97</strong> e custo por engajamento de apenas R$ 0,04.</div>
+      </div>
+    </div>
+    <div class="hl-card">
+      <div class="hl-num">04</div>
+      <div class="hl-body">
+        <div class="t">Palavras-chave com CTR excepcional</div>
+        <div class="d">"Logotipo profissional" (<strong>18,18%</strong>), "nome e logo para empresa" (15,91%) e "agencia de marketing" (14,86%) lideraram a semana.</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>Action+ · Assessoria de crescimento empresarial — período de 28/04 a 04/05/2026</span>
+    <span class="site">agenciaaction.com</span>
+  </footer>
+</div>
+<script src="reports.js"></script>
+<script src="nav.js"></script>
+</body>
+</html>
