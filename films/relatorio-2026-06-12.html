@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Relatório de Desempenho — Action Films</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* ID visual Action Films — monocromática (preto, branco e prata) */
+    --preto: #0A0A0A;
+    --preto-marca: #151515;
+    --cinza-card: #141414;
+    --cinza-borda: #2A2A2A;
+    --prata: #B7B8B5;
+    --prata-escuro: #73777B;
+    --branco: #FFFFFF;
+    --branco-suave: #EEEEEE;
+    --muted: #8A8D8F;
+
+    --bg: var(--preto);
+    --surface: var(--cinza-card);
+    --border: var(--cinza-borda);
+    --text: var(--branco-suave);
+    --accent: var(--prata);
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 40px 32px 80px; }
+
+  header { margin-bottom: 40px; }
+  .topbar { display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px; margin-bottom: 36px; }
+  .logo { font-weight: 900; font-size: 28px; letter-spacing: -1px;
+    color: var(--branco); line-height: 1; text-decoration: none; }
+  .logo .play { color: var(--prata); }
+  .logo .films { font-weight: 400; font-size: 16px; color: var(--muted);
+    letter-spacing: 2px; margin-left: 6px; }
+  .topbar .tag { font-size: 12px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted); }
+
+  /* Guias de períodos */
+  .tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+  .tab { display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+    font-size: 13px; font-weight: 700; color: var(--muted); padding: 9px 16px;
+    border: 1px solid var(--border); border-radius: 30px; transition: .15s; }
+  .tab:hover { border-color: var(--prata); color: var(--branco); }
+  .tab.active { background: var(--branco); border-color: var(--branco);
+    color: var(--preto); }
+  .tab .badge { font-size: 10px; font-weight: 800; letter-spacing: .5px;
+    text-transform: uppercase; padding: 2px 8px; border-radius: 20px;
+    background: rgba(10,10,10,.14); }
+  .tab:not(.active) .badge { background: rgba(255,255,255,.1); color: var(--prata); }
+  .tab.brand { margin-left: auto; border-style: dashed; }
+
+  .hero { border-left: 4px solid var(--branco); padding-left: 22px; }
+  h1 { font-size: clamp(30px, 5vw, 46px); font-weight: 900; line-height: 1.05;
+    color: var(--branco); letter-spacing: -1.5px; }
+  h1 .accent { color: var(--prata); }
+  .subtitle { color: var(--muted); margin-top: 12px; font-size: 16px; max-width: 640px; }
+
+  .section-title { display: flex; align-items: center; gap: 12px; margin: 46px 0 18px; }
+  .section-title h2 { font-size: 22px; font-weight: 800; color: var(--branco);
+    letter-spacing: -.5px; }
+  .section-title .bar { width: 26px; height: 4px; background: var(--branco);
+    border-radius: 2px; }
+  .section-title .chip { font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--muted); margin-left: auto; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px; }
+  .kpi { background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px; transition: .15s; }
+  .kpi:hover { border-color: var(--prata); }
+  .kpi .label { font-size: 12px; color: var(--muted); font-weight: 600;
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .kpi .value { font-size: 28px; font-weight: 800; color: var(--branco);
+    letter-spacing: -.5px; line-height: 1.1; }
+  .kpi .value.prata { color: var(--prata); }
+  .kpi .note { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+  .highlights { display: grid; gap: 12px; }
+  .hl-card { display: flex; gap: 16px; align-items: flex-start;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px 20px; transition: .15s; }
+  .hl-card:hover { border-color: var(--prata); }
+  .hl-num { font-weight: 900; font-size: 22px; color: var(--prata);
+    min-width: 34px; line-height: 1.2; }
+  .hl-body .t { font-size: 15.5px; font-weight: 700; color: var(--branco); }
+  .hl-body .d { font-size: 14px; color: var(--text); margin-top: 4px; }
+  .hl-body .d strong { color: var(--branco); font-weight: 800; }
+
+  footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+    gap: 10px; color: var(--muted); font-size: 13px; }
+  footer .site { color: var(--branco); font-weight: 800; letter-spacing: .3px; }
+
+  @media (max-width: 720px) {
+    .wrap { padding: 28px 18px 60px; }
+    .kpi .value { font-size: 24px; }
+    .tab.brand { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="topbar">
+      <div class="logo">acti<span class="play">▶</span>on<span class="films">films</span></div>
+      <div class="tag">Tráfego pago · Relatório de desempenho · 14/05 a 12/06/2026</div>
+    </div>
+    <nav class="tabs" id="tabs" aria-label="Períodos dos relatórios"></nav>
+    <div class="hero">
+      <h1>Resultados do <span class="accent">período</span></h1>
+      <p class="subtitle">Visão geral dos principais indicadores de mídia e presença digital entre 14 de maio e 12 de junho de 2026. Mais do que vídeos, criamos presença.</p>
+    </div>
+  </header>
+
+  <div class="section-title"><span class="bar"></span><h2>Visão geral</h2></div>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">Investimento total</div>
+      <div class="value prata">R$ 3.131,94</div>
+      <div class="note">6 campanhas · 16 anúncios ativos</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Conversas iniciadas (Meta)</div>
+      <div class="value prata">570</div>
+      <div class="note">A R$ 1,38 cada</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Conversões (Google Ads)</div>
+      <div class="value prata">277</div>
+      <div class="note">A R$ 8,46 cada</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Usuários no site</div>
+      <div class="value">1.242</div>
+      <div class="note">1.476 sessões no período</div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="bar"></span><h2>Google Ads</h2><span class="chip">Pesquisa</span></div>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">Taxa de conversão</div>
+      <div class="value prata">17,63%</div>
+    </div>
+    <div class="kpi">
+      <div class="label">CTR (taxa de cliques)</div>
+      <div class="value">7,51%</div>
+      <div class="note">1.571 cliques em 20.912 impressões</div>
+    </div>
+    <div class="kpi">
+      <div class="label">CPC médio</div>
+      <div class="value">R$ 1,49</div>
+      <div class="note">Custo total de R$ 2.343,00</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Melhor palavra-chave</div>
+      <div class="value" style="font-size:19px;">"Produtora de vídeo publicitário"</div>
+      <div class="note">CTR de 47,37% · 12 conversões</div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="bar"></span><h2>Meta Ads</h2><span class="chip">Facebook + Instagram</span></div>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">Custo por conversa</div>
+      <div class="value prata">R$ 1,38</div>
+      <div class="note">568 das 570 conversas via Instagram</div>
+    </div>
+    <div class="kpi">
+      <div class="label">CTR (taxa de cliques)</div>
+      <div class="value">2,24%</div>
+      <div class="note">1.150 cliques a R$ 0,69</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Custo por ThruPlay</div>
+      <div class="value">R$ 0,32</div>
+      <div class="note">2.435 ThruPlays no período</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Taxa de reprodução de 95%</div>
+      <div class="value">44,19%</div>
+      <div class="note">Retenção de vídeo muito acima da média</div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="bar"></span><h2>Presença digital</h2><span class="chip">Orgânico + Local</span></div>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">Visualizações no Instagram</div>
+      <div class="value">78.009</div>
+      <div class="note">699 visitas ao perfil</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Reel em destaque (02/06)</div>
+      <div class="value">5,85%</div>
+      <div class="note">Taxa de interação · 1.774 visualizações</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Engajamento no site (GA4)</div>
+      <div class="value">38,28%</div>
+      <div class="note">93% do tráfego vindo do Brasil</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Solicitações de rota</div>
+      <div class="value">36</div>
+      <div class="note">41 ações no Google Meu Negócio</div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="bar"></span><h2>Destaques do período</h2></div>
+  <div class="highlights">
+    <div class="hl-card">
+      <div class="hl-num">01</div>
+      <div class="hl-body">
+        <div class="t">Explosão de conversas no Meta</div>
+        <div class="d">Foram <strong>570 conversas iniciadas</strong> a apenas <strong>R$ 1,38</strong> cada — no período anterior eram 34 a R$ 46,62. O custo caiu 97%.</div>
+      </div>
+    </div>
+    <div class="hl-card">
+      <div class="hl-num">02</div>
+      <div class="hl-body">
+        <div class="t">Google Ads como máquina de leads</div>
+        <div class="d">Foram <strong>277 conversões</strong> com taxa de <strong>17,63%</strong> e custo de R$ 8,46 por conversão — desempenho excepcional para o segmento audiovisual.</div>
+      </div>
+    </div>
+    <div class="hl-card">
+      <div class="hl-num">03</div>
+      <div class="hl-body">
+        <div class="t">Palavras-chave de altíssima relevância</div>
+        <div class="d">"Produtora de vídeo publicitário" alcançou CTR de <strong>47,37%</strong> e "vídeo marketing para empresas" chegou a <strong>42,86%</strong> — quase metade de quem vê, clica.</div>
+      </div>
+    </div>
+    <div class="hl-card">
+      <div class="hl-num">04</div>
+      <div class="hl-body">
+        <div class="t">Vídeos que prendem até o fim</div>
+        <div class="d">Taxa de reprodução de 95% em <strong>44,19%</strong>, com ThruPlay a <strong>R$ 0,32</strong> — o conteúdo audiovisual da casa fala por si.</div>
+      </div>
+    </div>
+    <div class="hl-card">
+      <div class="hl-num">05</div>
+      <div class="hl-body">
+        <div class="t">Tráfego qualificado e local</div>
+        <div class="d">93% dos usuários do site vêm do Brasil, com engajamento de <strong>38,28%</strong> e a página de contato entre as mais acessadas (312 visualizações).</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>Action Films · Produtora audiovisual — período de 14/05 a 12/06/2026</span>
+    <span class="site">actionfilms.com.br</span>
+  </footer>
+</div>
+<script src="reports.js"></script>
+<script src="nav.js"></script>
+</body>
+</html>

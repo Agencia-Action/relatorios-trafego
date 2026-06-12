@@ -19,8 +19,8 @@
   });
   const marca = document.createElement("a");
   marca.className = "tab brand";
-  marca.href = "films/";
-  marca.textContent = "Action Films ▶";
-  marca.title = "Ir para os relatórios da Action Films";
+  marca.href = "../";
+  marca.textContent = "Action+ ↗";
+  marca.title = "Ir para os relatórios da Action+";
   el.appendChild(marca);
 })();

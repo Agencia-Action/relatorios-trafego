@@ -62,6 +62,8 @@
     text-transform: uppercase; padding: 2px 8px; border-radius: 20px;
     background: rgba(0,18,29,.18); }
   .tab:not(.active) .badge { background: rgba(145,255,86,.14); color: var(--action-green); }
+  .tab.brand { margin-left: auto; border-style: dashed; }
+  @media (max-width: 720px) { .tab.brand { margin-left: 0; } }
 
   .hero { border-left: 4px solid var(--action-green); padding-left: 22px; }
   h1 { font-size: clamp(30px, 5vw, 46px); font-weight: 800; line-height: 1.05;
