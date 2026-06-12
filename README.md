@@ -27,11 +27,18 @@ relatorios-trafego/
 └── films/
     ├── index.html                 → redireciona para o mais recente da Films
     ├── reports.js                 → lista de períodos da Films
-    ├── nav.js                     → guias + link "Action+ ↗"
+    ├── nav.js                     → guias + aba "Histórico consolidado" + link "Action+ ↗"
     ├── logo-action-films.png      → logo oficial (branca, fundo transparente)
+    ├── historico.html             → visão acumulada de toda a gestão (Out/25 – Jun/26)
     ├── relatorio-2026-06-12.html  → 14/05 – 12/06/2026 (atual)
     └── relatorio-2026-05-22.html  → 23/04 – 22/05/2026 (maio)
 ```
+
+> **Histórico consolidado (Films):** `films/historico.html` reúne os KPIs acumulados de
+> toda a gestão de tráfego do período (investimento total, métricas Google + Meta, conversas
+> e destaques), no mesmo padrão visual. Segue a regra editorial — **apenas KPIs e pontos
+> positivos**; CRM de leads, objeções e análise interna ficam no projeto privado
+> `historico-campanhas` (live63), nunca neste site público.
 
 ## Como atualizar (rotina semanal)
 
@@ -72,3 +79,4 @@ relatorios-trafego/
 | Action+ | 01/03 – 04/05/2026 | `relatorio-mar-abr-2026.html` |
 | Action Films | 14/05 – 12/06/2026 | `films/relatorio-2026-06-12.html` |
 | Action Films | 23/04 – 22/05/2026 | `films/relatorio-2026-05-22.html` |
+| Action Films | Out/25 – Jun/26 (consolidado) | `films/historico.html` |

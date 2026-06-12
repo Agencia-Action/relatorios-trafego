@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Histórico Consolidado — Action Films</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* ID visual Action Films — monocromática (preto, branco e prata) */
+    --preto: #0A0A0A;
+    --preto-marca: #151515;
+    --cinza-card: #141414;
+    --cinza-borda: #2A2A2A;
+    --prata: #B7B8B5;
+    --prata-escuro: #73777B;
+    --branco: #FFFFFF;
+    --branco-suave: #EEEEEE;
+    --muted: #8A8D8F;
+
+    --bg: var(--preto);
+    --surface: var(--cinza-card);
+    --border: var(--cinza-borda);
+    --text: var(--branco-suave);
+    --accent: var(--prata);
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 40px 32px 80px; }
+
+  header { margin-bottom: 40px; }
+  .topbar { display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px; margin-bottom: 36px; }
+  .logo { font-weight: 900; font-size: 28px; letter-spacing: -1px;
+    color: var(--branco); line-height: 1; text-decoration: none; }
+  .logo .play { color: var(--prata); }
+  .logo .films { font-weight: 400; font-size: 16px; color: var(--muted);
+    letter-spacing: 2px; margin-left: 6px; }
+  .topbar .tag { font-size: 12px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted); }
+
+  /* Guias de períodos */
+  .tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+  .tab { display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+    font-size: 13px; font-weight: 700; color: var(--muted); padding: 9px 16px;
+    border: 1px solid var(--border); border-radius: 30px; transition: .15s; }
+  .tab:hover { border-color: var(--prata); color: var(--branco); }
+  .tab.active { background: var(--branco); border-color: var(--branco);
+    color: var(--preto); }
+  .tab .badge { font-size: 10px; font-weight: 800; letter-spacing: .5px;
+    text-transform: uppercase; padding: 2px 8px; border-radius: 20px;
+    background: rgba(10,10,10,.14); }
+  .tab:not(.active) .badge { background: rgba(255,255,255,.1); color: var(--prata); }
+  .tab.brand { margin-left: auto; border-style: dashed; }
+  .tab.hist { border-style: dashed; }
+
+  .hero { border-left: 4px solid var(--branco); padding-left: 22px; }
+  h1 { font-size: clamp(30px, 5vw, 46px); font-weight: 900; line-height: 1.05;
+    color: var(--branco); letter-spacing: -1.5px; }
+  h1 .accent { color: var(--prata); }
+  .subtitle { color: var(--muted); margin-top: 12px; font-size: 16px; max-width: 660px; }
+
+  .section-title { display: flex; align-items: center; gap: 12px; margin: 46px 0 18px; }
+  .section-title h2 { font-size: 22px; font-weight: 800; color: var(--branco);
+    letter-spacing: -.5px; }
+  .section-title .bar { width: 26px; height: 4px; background: var(--branco);
+    border-radius: 2px; }
+  .section-title .chip { font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--muted); margin-left: auto; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px; }
+  .kpi { background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px; transition: .15s; }
+  .kpi:hover { border-color: var(--prata); }
+  .kpi .label { font-size: 12px; color: var(--muted); font-weight: 600;
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .kpi .value { font-size: 28px; font-weight: 800; color: var(--branco);
+    letter-spacing: -.5px; line-height: 1.1; }
+  .kpi .value.prata { color: var(--prata); }
+  .kpi .note { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+  .highlights { display: grid; gap: 12px; }
+  .hl-card { display: flex; gap: 16px; align-items: flex-start;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px 20px; transition: .15s; }
+  .hl-card:hover { border-color: var(--prata); }
+  .hl-num { font-weight: 900; font-size: 22px; color: var(--prata);
+    min-width: 34px; line-height: 1.2; }
+  .hl-body .t { font-size: 15.5px; font-weight: 700; color: var(--branco); }
+  .hl-body .d { font-size: 14px; color: var(--text); margin-top: 4px; }
+  .hl-body .d strong { color: var(--branco); font-weight: 800; }
+
+  /* Relatórios por período (links) */
+  .periods { display: grid; gap: 10px; }
+  .period-link { display: flex; align-items: center; justify-content: space-between;
+    gap: 14px; text-decoration: none; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 12px; padding: 15px 20px;
+    transition: .15s; }
+  .period-link:hover { border-color: var(--prata); }
+  .period-link .pl-label { font-size: 15px; font-weight: 700; color: var(--branco); }
+  .period-link .pl-go { font-size: 13px; font-weight: 700; color: var(--prata); }
+
+  footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+    gap: 10px; color: var(--muted); font-size: 13px; }
+  footer .site { color: var(--branco); font-weight: 800; letter-spacing: .3px; }
+
+  @media (max-width: 720px) {
+    .wrap { padding: 28px 18px 60px; }
+    .kpi .value { font-size: 24px; }
+    .tab.brand { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="topbar">
+      <img src="logo-action-films.png" alt="Action Films — Produtora Audiovisual" style="height:32px;width:auto;display:block;" />
+      <div class="tag">Tráfego pago · Histórico consolidado · Out/2025 a Jun/2026</div>
+    </div>
+    <nav class="tabs" id="tabs" aria-label="Períodos dos relatórios"></nav>
+    <div class="hero">
+      <h1>Histórico <span class="accent">consolidado</span></h1>
+      <p class="subtitle">Visão acumulada de toda a gestão de tráfego pago da Action Films entre outubro de 2025 e junho de 2026 — Google Ads e Meta Ads somados. Mais do que vídeos, criamos presença.</p>
+    </div>
+  </header>
+
+  <div class="section-title"><span class="bar"></span><h2>Visão geral do período</h2><span class="chip">~8 meses</span></div>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">Investimento total gerido</div>
+      <div class="value prata">R$ 13.203,35</div>
+      <div class="note">Google + Meta · 13/10/2025 a 09/06/2026</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Impressões acumuladas</div>
+      <div class="value">422 mil</div>
+      <div class="note">Alcance somado de mídia paga</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Cliques gerados</div>
+      <div class="value">23,3 mil</div>
+      <div class="note">Google + Meta no período</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Conversas iniciadas (Meta)</div>
+      <div class="value prata">389</div>
+      <div class="note">Por mensagem no Instagram/Facebook</div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="bar"></span><h2>Google Ads (acumulado)</h2><span class="chip">Pesquisa · Vídeo · PMax</span></div>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">Investimento</div>
+      <div class="value prata">R$ 12.400</div>
+      <div class="note">~94% da verba · foco em pesquisa</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Cliques</div>
+      <div class="value">22,3 mil</div>
+      <div class="note">382 mil impressões · CTR 5,84%</div>
+    </div>
+    <div class="kpi">
+      <div class="label">CPC médio</div>
+      <div class="value">R$ 0,56</div>
+      <div class="note">Menor CPC: campanha de YouTube a R$ 0,27</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Melhor CTR de campanha</div>
+      <div class="value">11,40%</div>
+      <div class="note">Campanha de pesquisa "[BB] Search-Web"</div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="bar"></span><h2>Meta Ads (acumulado)</h2><span class="chip">Facebook + Instagram</span></div>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">Conversas iniciadas</div>
+      <div class="value prata">389</div>
+      <div class="note">Foco em leads e engajamento</div>
+    </div>
+    <div class="kpi">
+      <div class="label">CTR médio</div>
+      <div class="value">2,49%</div>
+      <div class="note">40,2 mil impressões no período</div>
+    </div>
+    <div class="kpi">
+      <div class="label">CPC médio</div>
+      <div class="value">R$ 0,80</div>
+      <div class="note">Investimento de R$ 803,35</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Cliques no link</div>
+      <div class="value">1.000</div>
+      <div class="note">3 campanhas ativas</div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="bar"></span><h2>Destaques do período</h2></div>
+  <div class="highlights">
+    <div class="hl-card">
+      <div class="hl-num">01</div>
+      <div class="hl-body">
+        <div class="t">Pesquisa no Google como motor de tráfego</div>
+        <div class="d">A campanha de pesquisa "[BB] Search-Web" alcançou <strong>CTR de 11,40%</strong> com mais de <strong>5,5 mil cliques</strong> — quem busca por produtora audiovisual encontra a Action Films.</div>
+      </div>
+    </div>
+    <div class="hl-card">
+      <div class="hl-num">02</div>
+      <div class="hl-body">
+        <div class="t">YouTube com o menor custo da conta</div>
+        <div class="d">A campanha de vídeo no YouTube entregou cliques a apenas <strong>R$ 0,27</strong>, ampliando a visibilidade da marca a custo muito baixo.</div>
+      </div>
+    </div>
+    <div class="hl-card">
+      <div class="hl-num">03</div>
+      <div class="hl-body">
+        <div class="t">Conversas por mensagem no Meta</div>
+        <div class="d">Foram <strong>389 conversas iniciadas</strong> ao longo do período, abrindo canal direto de relacionamento com potenciais clientes.</div>
+      </div>
+    </div>
+    <div class="hl-card">
+      <div class="hl-num">04</div>
+      <div class="hl-body">
+        <div class="t">Volume consistente de mídia</div>
+        <div class="d">Ao todo, <strong>422 mil impressões</strong> e <strong>23,3 mil cliques</strong> em ~8 meses de gestão contínua entre Google e Meta.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="bar"></span><h2>Relatórios por período</h2><span class="chip">Detalhe</span></div>
+  <div class="periods" id="periods"></div>
+
+  <footer>
+    <span>Action Films · Histórico consolidado de tráfego — Out/2025 a Jun/2026</span>
+    <span class="site">actionfilms.com.br</span>
+  </footer>
+</div>
+<script src="reports.js"></script>
+<script src="nav.js"></script>
+<script>
+  // Lista os relatórios por período (a partir de RELATORIOS de reports.js).
+  (function () {
+    const box = document.getElementById("periods");
+    if (!box || typeof RELATORIOS === "undefined") return;
+    RELATORIOS.forEach((r) => {
+      const a = document.createElement("a");
+      a.className = "period-link";
+      a.href = r.arquivo;
+      a.innerHTML = '<span class="pl-label">' + r.label + '</span><span class="pl-go">Ver relatório →</span>';
+      box.appendChild(a);
+    });
+  })();
+</script>
+</body>
+</html>
